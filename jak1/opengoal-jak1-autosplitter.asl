@@ -413,6 +413,13 @@ init {
   );
 
   if (exported_ptr == IntPtr.Zero) {
+    // one last attempt with hard-coded offset
+    exported_ptr = new SignatureScanner(game, modules.First().BaseAddress, 11658000).Scan(
+      new SigScanTarget(marker.Length, marker)
+    );
+  }
+
+  if (exported_ptr == IntPtr.Zero) {
     vars.DebugOutput("Could not find the AutoSplittingInfo struct, old version of gk.exe? Failing!", true);
     sw.Reset();
     return false;
